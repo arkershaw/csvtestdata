@@ -1,0 +1,6 @@
+ID 4-1,Name,Address,Postcode,Email,Word 3-10,Integer 1-100,Decimal 10.0-15.0 2,Literal XXX,Date 1900-01-01 2000-12-30
+ID,Name,Address,Postcode,"Test,Email",Test Word,Test Integer,Test Decimal,Test Literal,Test Date
+1,"Test,Name",TestAddress,"TestPostcode
+",TestEmail,TestWord,TestInteger,TestDecimal,,TestDate
+2,,,,,,,,,
+3,,,,,,,,,
