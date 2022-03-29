@@ -30,6 +30,7 @@ See the test.csv file for a full example. The full list of data types supported 
 - `Decimal [min]-[max] [decimal places]`: A decimal number in the specified range (inclusive) rounded to the required decimal places. Min and max value should both be decimal numbers.
 - `Literal [value]`: Places the supplied value directly into the column.
 - `Date yyyy-mm-dd yyyy-mm-dd`: A random date in the specified range, in ISO format with the time set to midnight.
+- `Option [separator] [values]`: A choice from the provided values, delimited by the separator.
 
 # Usage
 
