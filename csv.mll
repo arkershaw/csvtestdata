@@ -45,12 +45,10 @@
 
 	let gen_name min max =
 		let length = gen_int min max in
-			let str = String.create (length + 1) in
-				let rec gen len =
-					match len with
-						0 -> String.set str 0 (gen_char true); str
-						| _ -> String.set str len (gen_char false); gen (len - 1) in
-				gen length;;
+			String.init length (fun i -> match i with
+				0 -> gen_char true;
+				| _ -> gen_char false
+			);;
 
 	let gen_postcode fi =
 		let pc = Buffer.create 8 in
@@ -95,6 +93,10 @@
 	let gen_date fy fm fd ty tm td =
 		string_of_int (gen_int fy ty) ^ "-" ^ string_of_int (gen_int fm tm) ^ "-" ^ string_of_int (gen_int fd td) ^ " 00:00:00";;
 
+	let pick_option sep opts = 
+		let vals = String.split_on_char sep opts in 
+			List.nth vals (Random.int (List.length vals));;
+
 	let generate fi =
 		let k = Hashtbl.find key fi in
 			if Str.string_match (Str.regexp "ID \\([0-9]+\\)-\\([0-9]+\\)") k 0 then
@@ -117,6 +119,8 @@
 				Str.matched_group 1 k
 			else if Str.string_match (Str.regexp "Date \\([0-9][0-9][0-9][0-9]\\)-\\([0-9][0-9]?\\)-\\([0-9][0-9]?\\) \\([0-9][0-9][0-9][0-9]\\)-\\([0-9][0-9]?\\)-\\([0-9][0-9]?\\)") k 0 then
 				gen_date (int_of_string (Str.matched_group 1 k)) (int_of_string (Str.matched_group 2 k)) (int_of_string (Str.matched_group 3 k)) (int_of_string (Str.matched_group 4 k)) (int_of_string (Str.matched_group 5 k)) (int_of_string (Str.matched_group 6 k))
+			else if Str.string_match (Str.regexp "Option \\(.\\) \\(.*\\)") k 0 then
+				pick_option (Str.matched_group 1 k).[0] (Str.matched_group 2 k)
 			else
 				"";;
 
